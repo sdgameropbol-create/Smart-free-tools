@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hashtag Generator</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        input, select, button { margin-top: 10px; padding: 10px; }
+        #result { margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <h1>Hashtag Generator</h1>
+    <form id="hashtagForm">
+        <label for="topic">Topic:</label>
+        <input type="text" id="topic" name="topic" required /><br />
+        
+        <label for="platform">Platform:</label>
+        <select id="platform" name="platform" required>
+            <option value="Instagram">Instagram</option>
+            <option value="Twitter">Twitter</option>
+            <option value="Facebook">Facebook</option>
+        </select><br />
+        
+        <label for="count">Hashtag Count:</label>
+        <input type="number" id="count" name="count" min="1" max="30" required /><br />
+        
+        <button type="submit">Generate</button>
+    </form>
+
+    <div id="result"></div>
+
+    <script>
+        document.getElementById('hashtagForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const topic = document.getElementById('topic').value;
+            const platform = document.getElementById('platform').value;
+            const count = document.getElementById('count').value;
+
+            const hashtags = generateHashtags(topic, platform, count);
+            document.getElementById('result').innerHTML = '<h2>Generated Hashtags:</h2>' + hashtags.join(', ') + '<br /><button onclick="copyToClipboard()">Copy</button>';
+        });
+
+        function generateHashtags(topic, platform, count) {
+            const hashtags = [];
+            for (let i = 0; i < count; i++) {
+                hashtags.push(`#${topic}${i + 1}`);
+            }
+            return hashtags;
+        }
+
+        function copyToClipboard() {
+            const resultElement = document.getElementById('result');
+            const range = document.createRange();
+            range.selectNode(resultElement);
+            window.getSelection().removeAllRanges();
+            window.getSelection().addRange(range);
+            document.execCommand('copy');
+            window.getSelection().removeAllRanges();
+            alert('Hashtags copied to clipboard!');
+        }
+    </script>
+</body>
+</html>
