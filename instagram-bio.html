@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instagram Bio Generator - Smart Free Tools</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <a href="index.html" class="btn-home">← Back to Home</a>
+        </div>
+    </nav>
+
+    <main class="container">
+        <div class="tool-container">
+            <div class="tool-header">
+                <h1>📱 Instagram Bio Generator</h1>
+                <p>Create a professional and eye-catching Instagram bio</p>
+            </div>
+
+            <div class="tool-form">
+                <div class="form-group">
+                    <label for="name">Your Name</label>
+                    <input type="text" id="name" placeholder="Enter your name">
+                </div>
+
+                <div class="form-group">
+                    <label for="profession">Profession/Niche</label>
+                    <input type="text" id="profession" placeholder="e.g., Photographer, Designer, Content Creator">
+                </div>
+
+                <div class="form-group">
+                    <label for="bio-style">Bio Style</label>
+                    <select id="bio-style">
+                        <option value="creative">Creative</option>
+                        <option value="professional">Professional</option>
+                        <option value="fun">Fun & Casual</option>
+                        <option value="minimal">Minimal</option>
+                    </select>
+                </div>
+
+                <button class="btn" onclick="generateInstagramBio()">Generate Bio</button>
+            </div>
+
+            <div class="result-section" id="result">
+                <h3>Generated Bio:</h3>
+                <div class="result-box" id="result-text"></div>
+                <button class="btn-copy" onclick="copyToClipboard('result-text')">Copy to Clipboard</button>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Smart Free Tools. All rights reserved.</p>
+    </footer>
+
+    <script>
+        const instagramBios = {
+            creative: [
+                "✨ {name} | {profession}\n🎨 Creating visual magic\n💡 Inspired by art & design\n🔗 link in bio",
+                "🌟 {name} | {profession}\n📸 Capturing moments\n💫 Spreading creativity\n📞 DM for collabs",
+                "🎭 {name} | {profession}\n🌈 Artist | Creator | Dreamer\n💼 Available for projects\n✉️ Get in touch"
+            ],
+            professional: [
+                "{name} | {profession}\n📊 Expert in my field\n💼 Available for partnerships\n🔗 LinkedIn in bio",
+                "{name}\n{profession} | Specialist\n📧 business@email.com\n🌐 Visit my website",
+                "{name} | {profession}\n💻 Strategic partner\n📱 Let's work together\n🎯 Helping brands grow"
+            ],
+            fun: [
+                "🎉 {name} | {profession}\n😄 Fun & creative vibes\n🚀 Making content, spreading joy\n💌 Tag me!",
+                "{name} | {profession}\n🌊 Living my best life\n😎 Just vibing\n📸 Check my stories",
+                "✨ {name} ✨\n{profession} by day, content creator by night\n😂 Laugh with me\n🎬 Enjoy the chaos"
+            ],
+            minimal: [
+                "{name} | {profession}",
+                "{name}\n{profession}",
+                "{name} • {profession}\n✨"
+            ]
+        };
+
+        function generateInstagramBio() {
+            const name = document.getElementById('name').value.trim();
+            const profession = document.getElementById('profession').value.trim();
+            const style = document.getElementById('bio-style').value;
+
+            if (!name || !profession) {
+                alert('Please fill in all fields');
+                return;
+            }
+
+            const bios = instagramBios[style];
+            const randomBio = bios[Math.floor(Math.random() * bios.length)];
+            const generatedBio = randomBio
+                .replace('{name}', name)
+                .replace('{profession}', profession);
+
+            document.getElementById('result-text').innerHTML = `<p>${generatedBio.replace(/\n/g, '<br>')}</p>`;
+            document.getElementById('result').classList.add('show');
+            showNotification('Bio generated successfully!');
+        }
+
+        function copyToClipboard(elementId) {
+            const element = document.getElementById(elementId);
+            const text = element.innerText;
+            navigator.clipboard.writeText(text).then(() => {
+                showNotification('Copied to clipboard!');
+            });
+        }
+
+        function showNotification(message) {
+            const notification = document.createElement('div');
+            notification.className = 'notification';
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            setTimeout(() => notification.remove(), 3000);
+        }
+
+        document.querySelectorAll('input').forEach(input => {
+            input.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') generateInstagramBio();
+            });
+        });
+    </script>
+</body>
+</html>
