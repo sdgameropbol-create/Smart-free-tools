@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouTube Title Generator</title>
+</head>
+<body>
+    <h1>YouTube Title Generator Tool</h1>
+    <form>
+        <label for="keyword">Enter a keyword:</label>
+        <input type="text" id="keyword" name="keyword" required>
+        <button type="submit">Generate Title</button>
+    </form>
+    <div id="results"></div>
+    <script>
+        document.querySelector('form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const keyword = document.getElementById('keyword').value;
+            const titles = [
+                `Amazing Video on ${keyword}!`,
+                `How to Master ${keyword}!`,
+                `The Secret to ${keyword} Revealed!`,
+                `Top 10 ${keyword} Tips & Tricks!`,
+                `${keyword}: Everything You Need to Know!`
+            ];
+            document.getElementById('results').innerHTML = titles.join('<br>');
+        });
+    </script>
+</body>
+</html>
