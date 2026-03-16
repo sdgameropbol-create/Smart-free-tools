@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Username Generator</title>
+    <script>
+        function generateUsername() {
+            const keyword = document.getElementById('keyword').value;
+            const style = document.getElementById('style').value;
+            const usernames = [];
+
+            // Basic username generation logic based on style
+            for (let i = 0; i < 5; i++) {
+                let username = keyword;
+                if (style === 'creative') {
+                    username += '_' + Math.random().toString(36).substring(2, 7);
+                } else if (style === 'gaming') {
+                    username += '_' + Math.floor(Math.random() * 1000);
+                } else if (style === 'professional') {
+                    username = keyword.charAt(0).toUpperCase() + keyword.slice(1);
+                } else if (style === 'cool') {
+                    username = 'xX_' + username + '_Xx';
+                } else if (style === 'minimal') {
+                    username = username.substring(0, 5);
+                }
+                usernames.push(username);
+            }
+
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = usernames.join('<br>');
+        }
+
+        function copyToClipboard() {
+            const resultDiv = document.getElementById('result');
+            navigator.clipboard.writeText(resultDiv.innerText);
+            alert('Usernames copied to clipboard!');
+        }
+    </script>
+</head>
+<body>
+    <h1>Username Generator</h1>
+    <input type="text" id="keyword" placeholder="Enter keyword/name" required>
+    <select id="style">
+        <option value="creative">Creative</option>
+        <option value="gaming">Gaming</option>
+        <option value="professional">Professional</option>
+        <option value="cool">Cool</option>
+        <option value="minimal">Minimal</option>
+    </select>
+    <button onclick="generateUsername()">Generate</button>
+    <div id="result"></div>
+    <button onclick="copyToClipboard()">Copy to Clipboard</button>
+</body>
+</html>
